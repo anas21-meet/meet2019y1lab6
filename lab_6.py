@@ -10,4 +10,4 @@ def fizzbuzz(n):
       else:
         result.append(number)
         
-  return(result)
+  print(result)
