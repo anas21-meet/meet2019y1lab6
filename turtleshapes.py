@@ -1,6 +1,6 @@
 import turtle
 #num_pts was 5 I changed it to 9 to increase sides.
-num_pts=9
+num_pts=12
 for i in range(num_pts):
     turtle.left(360/num_pts)
     turtle.fd(100)
