@@ -84,8 +84,39 @@ turtle.onkeypress(down,"Down")
 turtle.onkeypress(right,"Right")
 turtle.onkeypress(left, "Left")
 turtle.listen()
+turtle.register_shape("trash.gif")
+food = turtle.clone()
+food.shape("trash.gif")
+food_pos = [(100,100), (-100,100), (-100,-100), (100,-100)]
+food_stamps = []
+food_pos_num=0
+for this_food_pos in food_pos :
+    food.penup()
+    food.goto(food_pos[food_pos_num])
+    food.pendown()
+    food_stamp_id=food.stamp()
+    food_stamps.append(food_stamp_id)
+    food_pos_num=food_pos_num+1
+    if food_pos_num==4:
+        break
+    
+def make_food():
+    min_x=-int(SIZE_X/2/SQUARE_SIZE)+1
+    max_x=int(SIZE_X/2/SQUARE_SIZE)-1
+    min_y=-int(SIZE_Y/2/SQUARE_SIZE)+1
+    max_y=int(SIZE_Y/2/SQUARE_SIZE)-1
+    food_x = random.randint(min_x,max_x)*SQUARE_SIZE
+    food_y = random.randint(min_y,max_y)*SQUARE_SIZE
+    food.penup()
+    food.goto(food_x,food_y)
+    food_pos.append(food.pos())
+    food_stamps.append(food.stamp())
 
 def move_snake():
+    for x in pos_list[0:-1]:
+        if x==snake.pos():
+            quit()
+            
     my_pos=snake.pos()
     x_pos=my_pos[0]
     y_pos=my_pos[1]
@@ -118,16 +149,25 @@ def move_snake():
     elif new_y_pos<=DOWN_EDGE:
         print("You hit the down edge! Game over!")
         quit()
+    if snake.pos() in food_pos:
+        food_index=food_pos.index(snake.pos()) 
+        food.clearstamp(food_stamps[food_index]) 
+        food_pos.pop(food_index) 
+        food_stamps.pop(food_index) 
+        print("You have eaten the food!")
+        if len(food_stamps) <= 6 :
+                make_food()
     turtle.ontimer(move_snake,TIME_STEP)
 move_snake()
-turtle.listen()
-turtle.register_shape("trash.gif")
-food = turtle.clone()
-food.shape("trash.gif")
-food_pos = [(100,100), (-100,100), (-100,-100), (100,-100)]
-food_stamps = []
-for this_food_pos in food_pos :
+
+
+
+
     
+
+
+
+
     
     
     
