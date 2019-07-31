@@ -1,6 +1,8 @@
 
 import turtle
 import random #We'll need this later in the lab
+turtle.bgcolor('yellow')
+turtle.pencolor('pink')
 
 turtle.tracer(1,0) #This helps the turtle move more smoothly
 
@@ -113,9 +115,7 @@ def make_food():
     food_stamps.append(food.stamp())
 
 def move_snake():
-    for x in pos_list[0:-1]:
-        if x==snake.pos():
-            quit()
+   
             
     my_pos=snake.pos()
     x_pos=my_pos[0]
@@ -137,6 +137,8 @@ def move_snake():
     new_pos = snake.pos()
     new_x_pos = new_pos[0]
     new_y_pos = new_pos[1]
+
+    
     if new_x_pos>= RIGHT_EDGE:
         print("You hit the right edge! Game over!")
         quit()
@@ -149,35 +151,22 @@ def move_snake():
     elif new_y_pos<=DOWN_EDGE:
         print("You hit the down edge! Game over!")
         quit()
+    for x in pos_list[1:-1]:
+        if x==snake.pos():
+            quit()
     if snake.pos() in food_pos:
         food_index=food_pos.index(snake.pos()) 
         food.clearstamp(food_stamps[food_index]) 
         food_pos.pop(food_index) 
         food_stamps.pop(food_index) 
         print("You have eaten the food!")
+        new_stamp()
         if len(food_stamps) <= 6 :
                 make_food()
+
     turtle.ontimer(move_snake,TIME_STEP)
+    
 move_snake()
-
-
-
-
-    
-
-
-
-
-    
-    
-    
-        
-
-    
-        
-                   
-    
-        
 turtle.mainloop()
 
 
